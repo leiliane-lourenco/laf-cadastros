@@ -4,4 +4,10 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\LAF.Cadastros.Application\LAF.Cadastros.Application.csproj" />
+    <ProjectReference Include="..\LAF.Cadastros.Domain\LAF.Cadastros.Domain.csproj" />
+    <ProjectReference Include="..\LAF.Cadastros.Repository\LAF.Cadastros.Repository.csproj" />
+  </ItemGroup>
+
 </Project>
