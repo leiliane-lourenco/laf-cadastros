@@ -12,7 +12,7 @@ namespace LAF.Cadastros.Repository.Mappings
         {
             ToTable("Fornecedores");
 
-            Map(fornecedor => fornecedor.ID).ToColumn("Id").IsKey();
+            Map(fornecedor => fornecedor.ID).ToColumn("Id");
             Map(fornecedor => fornecedor.Nome).ToColumn("Nome");
             Map(fornecedor => fornecedor.Documento).ToColumn("Documento");
             Map(fornecedor => fornecedor.TipoFornecedor).ToColumn("TipoFornecedor");

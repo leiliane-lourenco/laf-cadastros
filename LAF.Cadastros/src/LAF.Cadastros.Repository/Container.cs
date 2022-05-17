@@ -1,4 +1,5 @@
 ﻿using Dapper.FluentMap;
+using Dapper.FluentMap.Dommel;
 using LAF.Cadastros.Repository.Mappings;
 
 namespace LAF.Cadastros.Repository
@@ -12,6 +13,8 @@ namespace LAF.Cadastros.Repository
             FluentMapper.Initialize(Configurar => 
             {
                 Configurar.AddMap(new FornecedorMap());
+
+                Configurar.ForDommel();
             });
         }
     }

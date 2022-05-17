@@ -11,5 +11,10 @@ namespace LAF.Cadastros.Domain.Entities
         public String Documento { get; set; }
         public int TipoFornecedor { get; set; }
         public bool Ativo { get; set; }
+
+        public Fornecedor()
+        {
+            ID = Guid.NewGuid();
+        }
     }
 }
