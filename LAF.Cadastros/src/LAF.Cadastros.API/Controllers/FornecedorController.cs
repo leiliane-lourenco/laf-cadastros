@@ -3,7 +3,6 @@ using LAF.Cadastros.Domain.Entities;
 using LAF.Cadastros.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace LAF.Cadastros.API.Controllers
 {
     [Route("api/fornecedores")]
@@ -17,7 +16,7 @@ namespace LAF.Cadastros.API.Controllers
             _fornecedorApplication = fornecedorApplication;
         }
         [HttpPost]
-        public IActionResult Adicionar(FornecedorPostiViewModel fornecedorPostViewModel)
+        public IActionResult Adicionar(FornecedorPostViewModel fornecedorPostViewModel)
         {
             //checar se estão todos preenchidos
 

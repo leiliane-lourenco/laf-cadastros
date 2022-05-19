@@ -3,8 +3,8 @@
 
 namespace LAF.Cadastros.Domain.Interfaces.Repository
 {
-    public interface IFornecedorRepository
+    public interface IProdutoRepository
     {
-        void Adicionar(Fornecedor fornecedor);
+        void Adicionar(Produto produto);
     }
 }

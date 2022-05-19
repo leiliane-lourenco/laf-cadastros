@@ -4,7 +4,7 @@ using System;
 
 namespace LAF.Cadastros.API.ViewModel
 {
-    public class FornecedorPostiViewModel
+    public class FornecedorPostViewModel
     {
         [JsonProperty("nome")]
         public String Nome { get; set; }

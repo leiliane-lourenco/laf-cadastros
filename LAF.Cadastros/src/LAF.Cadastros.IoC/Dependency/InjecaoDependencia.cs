@@ -14,8 +14,12 @@ namespace LAF.Cadastros.IoC.Dependency
             Container.RegistrarMapeamentosDapper();
 
             services.AddScoped<IFornecedorRepository, FornecedorRepository>();
+            services.AddScoped<IProdutoRepository, ProdutoRepository>();
 
             services.AddScoped<IFornecedorApplication, FornecedorApplication>();
+            services.AddScoped<IProdutoApplication, ProdutoApplication>();
+
+
         }
     }
 }
