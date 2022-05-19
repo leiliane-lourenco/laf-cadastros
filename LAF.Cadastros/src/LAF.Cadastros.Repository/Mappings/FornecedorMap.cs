@@ -1,7 +1,4 @@
 ﻿using Dapper.FluentMap.Dommel.Mapping;
-using System;
-using System.Collections.Generic;
-using System.Text;
 using LAF.Cadastros.Domain.Entities;
 
 namespace LAF.Cadastros.Repository.Mappings

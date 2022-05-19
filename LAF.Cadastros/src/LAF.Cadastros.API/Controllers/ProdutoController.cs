@@ -10,7 +10,6 @@ namespace LAF.Cadastros.API.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoApplication _produtoApplication;
-
         public ProdutoController(IProdutoApplication produtoApplication)
         {
             _produtoApplication = produtoApplication;
