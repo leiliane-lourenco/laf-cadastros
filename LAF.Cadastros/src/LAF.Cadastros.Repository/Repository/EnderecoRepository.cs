@@ -16,7 +16,8 @@ namespace LAF.Cadastros.Repository.Repository
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                db.Insert(endereco);
+                db.Insert(endereco); 
+              
             }
         }
     }

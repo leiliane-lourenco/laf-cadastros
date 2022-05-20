@@ -8,5 +8,7 @@ namespace LAF.Cadastros.Domain.Interfaces.Application
     public interface IFornecedorApplication
     {
         void Adicionar(Fornecedor fornecedor);
+        void Alterar(Fornecedor fornecedor);
+     
     }
 }

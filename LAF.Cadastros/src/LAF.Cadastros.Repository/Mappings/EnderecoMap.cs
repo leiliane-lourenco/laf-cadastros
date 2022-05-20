@@ -9,7 +9,7 @@ namespace LAF.Cadastros.Repository.Mappings
         {
             ToTable("Enderecos");
 
-            Map(endereco => endereco.Id).ToColumn("Id");
+            Map(endereco => endereco.Id).ToColumn("Id").IsKey();
             Map(endereco => endereco.Logradouro).ToColumn("Logradouro");
             Map(endereco => endereco.Numero).ToColumn("Numero");
             Map(endereco => endereco.Complemento).ToColumn("Complemento");

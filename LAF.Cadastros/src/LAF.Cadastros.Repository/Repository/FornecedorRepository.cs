@@ -17,7 +17,16 @@ namespace LAF.Cadastros.Repository.Repository
             using (SqlConnection db = new SqlConnection(_connection))
             {
                 db.Insert(fornecedor);
+
             }
         }
+        public void Alterar(Fornecedor fornecedor)
+        {
+            using (SqlConnection db = new SqlConnection(_connection))
+            {
+                db.Update(fornecedor);
+            }          
+        }
+
     }
 }
