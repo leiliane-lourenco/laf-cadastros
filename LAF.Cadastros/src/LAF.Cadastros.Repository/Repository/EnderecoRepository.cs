@@ -20,6 +20,13 @@ namespace LAF.Cadastros.Repository.Repository
               
             }
         }
+        public void Alterar(Endereco endereco)
+        {
+            using (SqlConnection db = new SqlConnection(_connection))
+            {
+                db.Update(endereco);
+            }
+        }
     }
 
 }
