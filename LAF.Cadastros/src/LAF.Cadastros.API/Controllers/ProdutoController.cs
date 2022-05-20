@@ -2,6 +2,7 @@
 using LAF.Cadastros.Domain.Entities;
 using LAF.Cadastros.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace LAF.Cadastros.API.Controllers
 {
@@ -30,6 +31,25 @@ namespace LAF.Cadastros.API.Controllers
             _produtoApplication.Adicionar(produto);
 
             return Ok(produto);
+        }
+        [HttpPut("{id}")]
+        public IActionResult Alterar(Guid id, [FromBody] ProdutoPutViewModel produtoPutViewModel)
+        {
+            Produto produto = new Produto()
+            {
+                Id = id,
+                FornecedorId = produtoPutViewModel.FornecedorId,
+                Nome = produtoPutViewModel.Nome,
+                Descricao = produtoPutViewModel.Descricao,
+                Valor = produtoPutViewModel.Valor,
+                Ativo = produtoPutViewModel.Ativo
+
+
+            };
+            _produtoApplication.Alterar(produto);
+
+            return NoContent();
+
         }
     }
 }
