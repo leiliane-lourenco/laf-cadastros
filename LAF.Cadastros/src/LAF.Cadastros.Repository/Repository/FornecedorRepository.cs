@@ -14,7 +14,7 @@ namespace LAF.Cadastros.Repository.Repository
 
         public void Adicionar(Fornecedor fornecedor)
         {
-            using (SqlConnection db = new SqlConnection(_connection))
+            using(SqlConnection db = new SqlConnection(_connection))
             {
                 db.Insert(fornecedor);
 
@@ -22,7 +22,7 @@ namespace LAF.Cadastros.Repository.Repository
         }
         public void Alterar(Fornecedor fornecedor)
         {
-            using (SqlConnection db = new SqlConnection(_connection))
+            using(SqlConnection db = new SqlConnection(_connection))
             {
                 db.Update(fornecedor);
             }          

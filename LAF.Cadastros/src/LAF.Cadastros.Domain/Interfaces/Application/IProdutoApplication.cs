@@ -6,5 +6,6 @@ namespace LAF.Cadastros.Domain.Interfaces.Application
     public interface IProdutoApplication
     {
         void Adicionar(Produto produto);
+        void Alterar(Produto produto);
     }
 }
