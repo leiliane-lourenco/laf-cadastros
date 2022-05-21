@@ -2,6 +2,7 @@
 using LAF.Cadastros.Domain.Entities;
 using LAF.Cadastros.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace LAF.Cadastros.API.Controllers
 {
@@ -33,6 +34,26 @@ namespace LAF.Cadastros.API.Controllers
             _enderecoApplication.Adicionar(endereco);
 
             return Ok(endereco);
+        }
+        [HttpPut("{id}")]
+        public IActionResult Alterar(Guid id, [FromBody] EnderecoPutViewModel enderecoPutViewModel)
+        {
+            Endereco endereco = new Endereco()
+            {
+                Id = id,
+                FornecedorId = enderecoPutViewModel.FornecedorId,
+                Logradouro = enderecoPutViewModel.Logradouro,
+                Numero = enderecoPutViewModel.Numero,
+                Complemento = enderecoPutViewModel.Complemento,
+                Cep = enderecoPutViewModel.Cep,
+                Bairro = enderecoPutViewModel.Bairro,
+                Cidade = enderecoPutViewModel.Cidade,
+                Estado = enderecoPutViewModel.Estado,
+
+            };
+            _enderecoApplication.Alterar(endereco);
+
+            return NoContent();
         }
 
     }
