@@ -7,6 +7,7 @@ namespace LAF.Cadastros.Domain.Interfaces.Repository
     {
         void Adicionar(Fornecedor fornecedor);
         void Alterar(Fornecedor fornecedor);
+        void Deletar(Fornecedor fornecedor);
      
     }
 }

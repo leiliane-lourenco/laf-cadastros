@@ -27,6 +27,13 @@ namespace LAF.Cadastros.Repository.Repository
                 db.Update(fornecedor);
             }          
         }
+        public void Deletar(Fornecedor fornecedor)
+        {
+            using (SqlConnection db = new SqlConnection(_connection))
+            {
+                db.Delete(fornecedor);
+            }
+        }
 
     }
 }

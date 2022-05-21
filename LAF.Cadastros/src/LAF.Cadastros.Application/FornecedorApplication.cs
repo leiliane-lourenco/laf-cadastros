@@ -23,6 +23,10 @@ namespace LAF.Cadastros.Application
             _fornecedorRepository.Alterar(fornecedor);
             
         }
+        public void Deletar(Fornecedor fornecedor)
+        {
+            _fornecedorRepository.Deletar(fornecedor);
+        }
 
         
     }

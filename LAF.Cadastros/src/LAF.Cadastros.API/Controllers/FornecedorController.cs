@@ -51,5 +51,21 @@ namespace LAF.Cadastros.API.Controllers
 
             return NoContent();
         }
+        [HttpDelete("{id}")]
+        public IActionResult Deletar(Guid id, FornecedorDeleteViewModel fornecedorDeleteViewModel)
+        {
+            Fornecedor fornecedor = new Fornecedor()
+            {
+                Id = id,
+                Nome = fornecedorDeleteViewModel.Nome,
+                Documento = fornecedorDeleteViewModel.Documento,
+                TipoFornecedor = fornecedorDeleteViewModel.TipoFornecedor,
+                Ativo = fornecedorDeleteViewModel.Ativo
+            };
+
+            _fornecedorApplication.Deletar(fornecedor);
+
+            return NoContent();
+        }
     }
 }
