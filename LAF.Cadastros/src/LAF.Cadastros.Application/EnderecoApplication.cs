@@ -20,5 +20,9 @@ namespace LAF.Cadastros.Application
         {
             _enderecoRepository.Alterar(endereco);
         }
+        public void Deletar(Endereco endereco)
+        {
+            _enderecoRepository.Deletar(endereco);
+        }
     }
 }

@@ -53,9 +53,30 @@ namespace LAF.Cadastros.API.Controllers
             };
             _enderecoApplication.Alterar(endereco);
 
-            return NoContent();
+            return Ok(endereco);
         }
+        [HttpDelete("{id}")]
+        public IActionResult Deletar (Guid id, EnderecoDeleteViewModel enderecoDeleteViewModel)
+        {
+            Endereco endereco = new Endereco()
+            {
+                Id = id,
+                FornecedorId = enderecoDeleteViewModel.FornecedorId,
+                Logradouro = enderecoDeleteViewModel.Logradouro,
+                Numero = enderecoDeleteViewModel.Numero,
+                Complemento = enderecoDeleteViewModel.Complemento,
+                Cep = enderecoDeleteViewModel.Cep,
+                Bairro = enderecoDeleteViewModel.Bairro,
+                Cidade = enderecoDeleteViewModel.Cidade,
+                Estado = enderecoDeleteViewModel.Estado,
 
+            };
+            _enderecoApplication.Deletar(endereco);
+
+            return NoContent();
+
+           
+        }
     }
     
 }

@@ -16,8 +16,8 @@ namespace LAF.Cadastros.Repository.Repository
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                db.Insert(endereco); 
-              
+                db.Insert(endereco);
+
             }
         }
         public void Alterar(Endereco endereco)
@@ -27,6 +27,16 @@ namespace LAF.Cadastros.Repository.Repository
                 db.Update(endereco);
             }
         }
-    }
+        public void Deletar(Endereco endereco)
+        {
+            using (SqlConnection db = new SqlConnection(_connection))
+            {
+                db.Delete(endereco);
 
+            }
+        }
+    }
 }
+
+
+
