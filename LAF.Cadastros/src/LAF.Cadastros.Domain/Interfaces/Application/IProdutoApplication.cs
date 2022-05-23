@@ -7,5 +7,7 @@ namespace LAF.Cadastros.Domain.Interfaces.Application
     {
         void Adicionar(Produto produto);
         void Alterar(Produto produto);
+        void Deletar(Produto produto);
+
     }
 }

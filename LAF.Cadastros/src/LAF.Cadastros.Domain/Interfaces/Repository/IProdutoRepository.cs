@@ -7,5 +7,6 @@ namespace LAF.Cadastros.Domain.Interfaces.Repository
     {
         void Adicionar(Produto produto);
         void Alterar(Produto produto);
+        void Deletar(Produto produto);
     }
 }

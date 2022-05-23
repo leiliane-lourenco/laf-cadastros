@@ -49,6 +49,22 @@ namespace LAF.Cadastros.API.Controllers
             _produtoApplication.Alterar(produto);
 
             return NoContent();
+        }
+        [HttpDelete("{id}")]
+        public IActionResult Deletar (Guid id, ProdutoDeleteViewModel produtoDeleteViewModel)
+        {
+            Produto produto = new Produto()
+            {
+                Id = id,
+                FornecedorId = produtoDeleteViewModel.FornecedorId,
+                Nome = produtoDeleteViewModel.Nome,
+                Descricao = produtoDeleteViewModel.Descricao,
+                Ativo = produtoDeleteViewModel.Ativo
+
+            };
+            _produtoApplication.Deletar(produto);
+            return NoContent();
+
 
         }
     }

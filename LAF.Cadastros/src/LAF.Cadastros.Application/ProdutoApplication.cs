@@ -20,6 +20,10 @@ namespace LAF.Cadastros.Application
         {
             _produtoRepository.Alterar(produto);
         }
+        public void Deletar(Produto produto)
+        {
+            _produtoRepository.Deletar(produto);
+        }
     }
 
 }
