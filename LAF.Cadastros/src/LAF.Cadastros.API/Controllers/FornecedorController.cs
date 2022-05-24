@@ -16,11 +16,33 @@ namespace LAF.Cadastros.API.Controllers
         {
             _fornecedorApplication = fornecedorApplication;
         }
+        [HttpGet("{id}")]
+        public IActionResult ObterPorId(Guid id)
+        {
+            Fornecedor fornecedor = _fornecedorApplication.ObterPorId(id);
+
+            if (fornecedor == null)
+            {
+                return NotFound();
+            }
+            return Ok(fornecedor);
+        }
+        [HttpGet]
+        public IActionResult ObterTodos(Guid id)
+        {
+            return Ok(_fornecedorApplication.ObterTodos());
+
+        }
+        [HttpGet("filtros/{documento}")]
+        public IActionResult ObterPorDocumento(string documento)
+        {
+            return Ok(_fornecedorApplication.Buscar(fornecedor => fornecedor.Documento == documento));
+        }
+
         [HttpPost]
         public IActionResult Adicionar(FornecedorPostViewModel fornecedorPostViewModel)
         {
             //checar se estão todos preenchidos
-
             Fornecedor fornecedor = new Fornecedor()
             {
                 Documento = fornecedorPostViewModel.Documento,
@@ -38,34 +60,30 @@ namespace LAF.Cadastros.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Alterar(Guid id, [FromBody] FornecedorPutViewModel fornecedorPutViewModel)
         {
-            Fornecedor fornecedor = new Fornecedor()
-            {
-                Id = id,
-                Nome = fornecedorPutViewModel.Nome,
-                Documento = fornecedorPutViewModel.Documento,
-                TipoFornecedor = fornecedorPutViewModel.TipoFornecedor,
-                Ativo = fornecedorPutViewModel.Ativo
-            };
+            Fornecedor fornecedor = _fornecedorApplication.ObterPorId(id);
+
+            if (fornecedor == null) return NotFound("Fornecedor não encontrado!");
+
+            fornecedor.Nome = fornecedorPutViewModel.Nome;
+            fornecedor.TipoFornecedor = fornecedorPutViewModel.TipoFornecedor;
+            fornecedor.Ativo = fornecedorPutViewModel.Ativo;
 
             _fornecedorApplication.Alterar(fornecedor);
 
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult Deletar(Guid id, FornecedorDeleteViewModel fornecedorDeleteViewModel)
+        public IActionResult Deletar(Guid id)
         {
             Fornecedor fornecedor = new Fornecedor()
             {
                 Id = id,
-                Nome = fornecedorDeleteViewModel.Nome,
-                Documento = fornecedorDeleteViewModel.Documento,
-                TipoFornecedor = fornecedorDeleteViewModel.TipoFornecedor,
-                Ativo = fornecedorDeleteViewModel.Ativo
+
             };
 
             _fornecedorApplication.Deletar(fornecedor);
 
-            return NoContent();
+            return Ok(fornecedor);
         }
     }
 }

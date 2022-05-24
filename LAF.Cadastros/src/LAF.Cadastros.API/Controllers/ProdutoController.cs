@@ -44,22 +44,17 @@ namespace LAF.Cadastros.API.Controllers
                 Valor = produtoPutViewModel.Valor,
                 Ativo = produtoPutViewModel.Ativo
 
-
             };
             _produtoApplication.Alterar(produto);
 
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult Deletar (Guid id, ProdutoDeleteViewModel produtoDeleteViewModel)
+        public IActionResult Deletar (Guid id)
         {
             Produto produto = new Produto()
             {
                 Id = id,
-                FornecedorId = produtoDeleteViewModel.FornecedorId,
-                Nome = produtoDeleteViewModel.Nome,
-                Descricao = produtoDeleteViewModel.Descricao,
-                Ativo = produtoDeleteViewModel.Ativo
 
             };
             _produtoApplication.Deletar(produto);

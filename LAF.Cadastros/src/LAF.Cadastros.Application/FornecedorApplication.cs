@@ -2,7 +2,8 @@
 using LAF.Cadastros.Domain.Interfaces.Application;
 using LAF.Cadastros.Domain.Interfaces.Repository;
 using System;
-
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace LAF.Cadastros.Application
 {
@@ -12,6 +13,19 @@ namespace LAF.Cadastros.Application
         public FornecedorApplication(IFornecedorRepository fornecedorRepository)
         {
             _fornecedorRepository = fornecedorRepository;
+        }
+        public Fornecedor ObterPorId(Guid id)
+        {
+          
+            return _fornecedorRepository.ObterPorId(id);
+        }
+        public IEnumerable<Fornecedor> ObterTodos()
+        {
+            return _fornecedorRepository.ObterTodos();
+        }
+        public IEnumerable<Fornecedor> Buscar(Expression<Func<Fornecedor, bool>> where)
+        {
+            return _fornecedorRepository.Buscar(where);
         }
 
         public void Adicionar(Fornecedor fornecedor)
