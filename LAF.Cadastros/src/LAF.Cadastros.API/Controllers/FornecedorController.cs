@@ -29,7 +29,7 @@ namespace LAF.Cadastros.API.Controllers
             return Ok(fornecedor);
         }
         [HttpGet]
-        public IActionResult ObterTodos(Guid id)
+        public IActionResult ObterTodos()
         {
             return Ok(_fornecedorApplication.ObterTodos());
 

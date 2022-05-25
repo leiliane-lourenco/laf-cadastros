@@ -13,19 +13,19 @@ namespace LAF.Cadastros.Repository.Repository
     {
         private string _connection = @"Data Source=Leiliane-PC\SQL2019;Initial Catalog=LAJFCadastroProdutosDB;User ID=sa;Password=123";
 
-        public Fornecedor ObterPorId(Guid id)
-        {
-            using (SqlConnection db = new SqlConnection(_connection))
-            {
-                 return db.Get<Fornecedor>(id);
-                //retorna fornecedor com base no ID que passei
-            }
-        }
         public IEnumerable<Fornecedor> ObterTodos()
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
                 return db.GetAll <Fornecedor>();
+                //retorna fornecedor com base no ID que passei
+            }
+        }
+        public Fornecedor ObterPorId(Guid id)
+        {
+            using (SqlConnection db = new SqlConnection(_connection))
+            {
+                 return db.Get<Fornecedor>(id);
                 //retorna fornecedor com base no ID que passei
             }
         }

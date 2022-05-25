@@ -15,6 +15,23 @@ namespace LAF.Cadastros.API.Controllers
         {
             _enderecoApplication = enderecoApplication;
         }
+        [HttpGet]
+        public IActionResult ObterTodos()
+        {
+            return Ok(_enderecoApplication.ObterTodos());
+        }
+        [HttpGet("{id}")]
+        public IActionResult ObterPorId(Guid id)
+        {
+            return Ok(_enderecoApplication.ObterPorId(id));
+        }
+
+        [HttpGet("filtros/{logradouro}")]
+        public IActionResult ObterPorLogradouro(string logradouro)
+        {
+            return Ok(_enderecoApplication.Buscar(endereco => endereco.Logradouro == logradouro));
+        }
+
         [HttpPost]
         public IActionResult Adicionar(EnderecoPostViewModel enderecoPostViewModel)
         {
