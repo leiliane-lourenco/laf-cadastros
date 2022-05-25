@@ -15,6 +15,26 @@ namespace LAF.Cadastros.API.Controllers
         {
             _produtoApplication = produtoApplication;
         }
+        [HttpGet]
+        public IActionResult ObterTodos()
+        {
+            return Ok(_produtoApplication.ObterTodos());
+        }
+        [HttpGet("{id}")]
+        public IActionResult ObterPorId(Guid id)
+        {
+            Produto produto = _produtoApplication.ObterPorId(id);
+
+            if (produto == null)
+                return NotFound();
+
+            return Ok(produto);
+        }
+        [HttpGet("filtros/{nome}")]
+        public IActionResult Buscar(string nome)
+        {
+            return Ok(_produtoApplication.Buscar(produto => produto.Nome == nome));
+        }
         [HttpPost]
         public IActionResult Adicionar(ProdutoPostViewModel produtoPostViewModel)
         {
@@ -50,7 +70,7 @@ namespace LAF.Cadastros.API.Controllers
             return NoContent();
         }
         [HttpDelete("{id}")]
-        public IActionResult Deletar (Guid id)
+        public IActionResult Deletar(Guid id)
         {
             Produto produto = new Produto()
             {
