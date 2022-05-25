@@ -3,6 +3,7 @@ using LAF.Cadastros.Domain.Entities;
 using LAF.Cadastros.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace LAF.Cadastros.API.Controllers
 {
@@ -42,8 +43,12 @@ namespace LAF.Cadastros.API.Controllers
         [HttpPost]
         public IActionResult Adicionar(FornecedorPostViewModel fornecedorPostViewModel)
         {
-            //checar se estão todos preenchidos
-            Fornecedor fornecedor = new Fornecedor()
+            Fornecedor fornecedor = _fornecedorApplication.Buscar(fornecedor => fornecedor.Documento ==
+                                                                  fornecedorPostViewModel.Documento).FirstOrDefault();
+            if (fornecedor != null)
+                return BadRequest("Fornecedor já cadastrado");
+
+            fornecedor = new Fornecedor()
             {
                 Documento = fornecedorPostViewModel.Documento,
                 Ativo = fornecedorPostViewModel.Ativo,
@@ -51,10 +56,18 @@ namespace LAF.Cadastros.API.Controllers
                 TipoFornecedor = fornecedorPostViewModel.TipoFornecedor
 
             };
+            if (String.IsNullOrWhiteSpace(fornecedorPostViewModel.Documento))
+            return BadRequest("Campo Documento deve estar preenchido!");
+
+            if (String.IsNullOrEmpty(fornecedorPostViewModel.Nome)) 
+            return BadRequest("Campo Nome deve estar preenchido!");
+
+            if (fornecedorPostViewModel.TipoFornecedor != 1 || fornecedorPostViewModel.TipoFornecedor != 2) 
+            return BadRequest("Informe 1-Pessoa Jurídica ou 2-Pessoa Física");
 
             _fornecedorApplication.Adicionar(fornecedor);
-
             return Ok(fornecedor);
+
         }
 
         [HttpPut("{id}")]
@@ -83,7 +96,7 @@ namespace LAF.Cadastros.API.Controllers
 
             _fornecedorApplication.Deletar(fornecedor);
 
-            return Ok(fornecedor);
+            return Ok();
         }
     }
 }
