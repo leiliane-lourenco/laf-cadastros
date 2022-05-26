@@ -3,6 +3,7 @@ using LAF.Cadastros.Domain.Entities;
 using LAF.Cadastros.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Linq;
 
 namespace LAF.Cadastros.API.Controllers
 {
@@ -38,7 +39,13 @@ namespace LAF.Cadastros.API.Controllers
         [HttpPost]
         public IActionResult Adicionar(ProdutoPostViewModel produtoPostViewModel)
         {
-            Produto produto = new Produto()
+
+            Produto produto = _produtoApplication.Buscar(produto => produto.Nome == produtoPostViewModel.Nome).FirstOrDefault();
+
+            if (produto != null)
+                return BadRequest("Produto já cadastrado");
+
+            produto = new Produto()
             {
                 FornecedorId = produtoPostViewModel.FornecedorId,
                 Nome = produtoPostViewModel.Nome,
@@ -48,6 +55,15 @@ namespace LAF.Cadastros.API.Controllers
 
             };
 
+            if (String.IsNullOrWhiteSpace(produtoPostViewModel.Nome))
+                return BadRequest("Campo nome deve estar preenchido!");
+
+            if (String.IsNullOrWhiteSpace(produtoPostViewModel.Descricao))
+                return BadRequest("Campor descrição deve estar preenchido");
+
+            if (produtoPostViewModel.Valor < 1)
+                return BadRequest("O valor do produto deve ser maior que zero");
+
             _produtoApplication.Adicionar(produto);
 
             return Ok(produto);
@@ -55,7 +71,12 @@ namespace LAF.Cadastros.API.Controllers
         [HttpPut("{id}")]
         public IActionResult Alterar(Guid id, [FromBody] ProdutoPutViewModel produtoPutViewModel)
         {
-            Produto produto = new Produto()
+            Produto produto = _produtoApplication.ObterPorId(id);
+
+            if (id == null)
+                return BadRequest("Produto não existe no banco de dados!");
+
+            produto = new Produto()
             {
                 Id = id,
                 FornecedorId = produtoPutViewModel.FornecedorId,
@@ -65,6 +86,16 @@ namespace LAF.Cadastros.API.Controllers
                 Ativo = produtoPutViewModel.Ativo
 
             };
+
+            if(String.IsNullOrWhiteSpace(produtoPutViewModel.Nome))
+                return BadRequest("O campo nome deve ser preenchido!");
+
+            if (String.IsNullOrWhiteSpace(produtoPutViewModel.Descricao))
+                return BadRequest("O campo descricão deve ser preenchido!");
+
+            if (produtoPutViewModel.Valor <= 0)
+                return BadRequest("O valor do produto deve ser maior que zero!");
+
             _produtoApplication.Alterar(produto);
 
             return NoContent();
@@ -75,11 +106,11 @@ namespace LAF.Cadastros.API.Controllers
             Produto produto = new Produto()
             {
                 Id = id,
-
             };
+
             _produtoApplication.Deletar(produto);
             return NoContent();
-
+           
 
         }
     }
