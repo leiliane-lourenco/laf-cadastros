@@ -1,5 +1,6 @@
 ﻿using LAF.Cadastros.API.ViewModel;
 using LAF.Cadastros.Domain.Entities;
+using LAF.Cadastros.Domain.Enum;
 using LAF.Cadastros.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -53,17 +54,21 @@ namespace LAF.Cadastros.API.Controllers
                 Documento = fornecedorPostViewModel.Documento,
                 Ativo = fornecedorPostViewModel.Ativo,
                 Nome = fornecedorPostViewModel.Nome,
-                TipoFornecedor = fornecedorPostViewModel.TipoFornecedor
+                TipoFornecedor = (TipoFornecedor)fornecedorPostViewModel.TipoFornecedor
 
             };
+
             if (String.IsNullOrWhiteSpace(fornecedorPostViewModel.Documento))
             return BadRequest("Campo Documento deve estar preenchido!");
 
             if (String.IsNullOrEmpty(fornecedorPostViewModel.Nome)) 
             return BadRequest("Campo Nome deve estar preenchido!");
 
-            if (fornecedorPostViewModel.TipoFornecedor != 1 || fornecedorPostViewModel.TipoFornecedor != 2) 
-            return BadRequest("Informe 1-Pessoa Jurídica ou 2-Pessoa Física");
+            if (fornecedorPostViewModel.TipoFornecedor < 1 || fornecedorPostViewModel.TipoFornecedor > 2)
+                return BadRequest("Informe 1-Pessoa Jurídica ou 2-Pessoa Física");
+
+            if (!fornecedorPostViewModel.Ativo)
+                BadRequest("Para inserir um novo fornecedor o mesmo dever estar ativo!!");
 
             _fornecedorApplication.Adicionar(fornecedor);
             return Ok(fornecedor);
@@ -78,7 +83,7 @@ namespace LAF.Cadastros.API.Controllers
             if (fornecedor == null) return NotFound("Fornecedor não encontrado!");
 
             fornecedor.Nome = fornecedorPutViewModel.Nome;
-            fornecedor.TipoFornecedor = fornecedorPutViewModel.TipoFornecedor;
+            fornecedor.TipoFornecedor = (TipoFornecedor)fornecedorPutViewModel.TipoFornecedor;
             fornecedor.Ativo = fornecedorPutViewModel.Ativo;
 
             _fornecedorApplication.Alterar(fornecedor);

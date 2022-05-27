@@ -26,10 +26,10 @@ namespace LAF.Cadastros.API.Controllers
             return Ok(_enderecoApplication.ObterPorId(id));
         }
 
-        [HttpGet("filtros/{logradouro}")]
-        public IActionResult ObterPorLogradouro(string logradouro)
+        [HttpGet("filtros/{cidade}")]
+        public IActionResult ObterPorLogradouro(string cidade)
         {
-            return Ok(_enderecoApplication.Buscar(endereco => endereco.Logradouro == logradouro));
+            return Ok(_enderecoApplication.Buscar(endereco => endereco.Cidade == cidade));
         }
 
         [HttpPost]
@@ -47,6 +47,24 @@ namespace LAF.Cadastros.API.Controllers
                 Estado = enderecoPostViewModel.Estado,
 
             };
+
+            if (String.IsNullOrWhiteSpace(enderecoPostViewModel.Logradouro))
+                return BadRequest("Campo Logradouro deve estar preenchido");
+
+            if (enderecoPostViewModel.Numero < 1)
+                return BadRequest("Campo Numero deve estar preenchido");
+
+            if (String.IsNullOrWhiteSpace(enderecoPostViewModel.Cep))
+                return BadRequest("Campo Cep deve estar preenchido");
+
+            if (String.IsNullOrWhiteSpace(enderecoPostViewModel.Bairro))
+                return BadRequest("Campo Bairro deve estar preenchido");
+
+            if (String.IsNullOrWhiteSpace(enderecoPostViewModel.Cidade))
+                return BadRequest("Campo Cidade deve estar preenchido");
+
+            if (String.IsNullOrWhiteSpace(enderecoPostViewModel.Estado))
+                return BadRequest("Campo Estado deve estar preenchido");
 
             _enderecoApplication.Adicionar(endereco);
 
