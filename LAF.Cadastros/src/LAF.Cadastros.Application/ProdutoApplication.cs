@@ -10,9 +10,13 @@ namespace LAF.Cadastros.Application
     public class ProdutoApplication : IProdutoApplication
     {
         private readonly IProdutoRepository _produtoRepository;
-        public ProdutoApplication(IProdutoRepository produtoRepository)
+        private readonly IFornecedorRepository _fornecedorRepository;
+        public ProdutoApplication(
+            IProdutoRepository produtoRepository, 
+            IFornecedorRepository fornecedorRepository )
         {
             _produtoRepository = produtoRepository;
+            _fornecedorRepository = fornecedorRepository;
         }
         public Produto ObterPorId(Guid id)
         {

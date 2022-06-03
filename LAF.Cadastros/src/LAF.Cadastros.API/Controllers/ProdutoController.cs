@@ -1,4 +1,5 @@
 ﻿using LAF.Cadastros.API.ViewModel;
+using LAF.Cadastros.Application;
 using LAF.Cadastros.Domain.Entities;
 using LAF.Cadastros.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
@@ -12,9 +13,13 @@ namespace LAF.Cadastros.API.Controllers
     public class ProdutoController : ControllerBase
     {
         private readonly IProdutoApplication _produtoApplication;
-        public ProdutoController(IProdutoApplication produtoApplication)
+        private readonly IFornecedorApplication _fornecedorApplication;
+        public ProdutoController(
+            IProdutoApplication produtoApplication, 
+            IFornecedorApplication fornecedorApplication)
         {
             _produtoApplication = produtoApplication;
+            _fornecedorApplication = fornecedorApplication;
         }
         [HttpGet]
         public IActionResult ObterTodos()
@@ -41,9 +46,21 @@ namespace LAF.Cadastros.API.Controllers
         {
 
             Produto produto = _produtoApplication.Buscar(produto => produto.Nome == produtoPostViewModel.Nome).FirstOrDefault();
-
             if (produto != null)
                 return BadRequest("Produto já cadastrado");
+
+            Fornecedor fornecedor = _fornecedorApplication.ObterPorId(produtoPostViewModel.FornecedorId);
+            if (fornecedor == null)
+                return BadRequest("Fornecedor não cadastrado!");
+
+            if (String.IsNullOrWhiteSpace(produtoPostViewModel.Nome))
+                return BadRequest("Campo nome deve estar preenchido!");
+
+            if (String.IsNullOrWhiteSpace(produtoPostViewModel.Descricao))
+                return BadRequest("Campor descrição deve estar preenchido");
+
+            if (produtoPostViewModel.Valor < 1)
+                return BadRequest("O valor do produto deve ser maior que zero");
 
             produto = new Produto()
             {
@@ -54,15 +71,6 @@ namespace LAF.Cadastros.API.Controllers
                 Ativo = produtoPostViewModel.Ativo,
 
             };
-
-            if (String.IsNullOrWhiteSpace(produtoPostViewModel.Nome))
-                return BadRequest("Campo nome deve estar preenchido!");
-
-            if (String.IsNullOrWhiteSpace(produtoPostViewModel.Descricao))
-                return BadRequest("Campor descrição deve estar preenchido");
-
-            if (produtoPostViewModel.Valor < 1)
-                return BadRequest("O valor do produto deve ser maior que zero");
 
             _produtoApplication.Adicionar(produto);
 
