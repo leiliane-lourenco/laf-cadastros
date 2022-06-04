@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LAF.Cadastros.Repository.Repository
 {
@@ -13,51 +14,50 @@ namespace LAF.Cadastros.Repository.Repository
     {
         private string _connection = @"Data Source=Leiliane-PC\SQL2019;Initial Catalog=LAJFCadastroProdutosDB;User ID=sa;Password=123";
 
-        public IEnumerable<Fornecedor> ObterTodos()
+        public async Task <IEnumerable<Fornecedor>> ObterTodos()
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                return db.GetAll <Fornecedor>();
+                return await db.GetAllAsync<Fornecedor>();
                 //retorna fornecedor com base no ID que passei
             }
         }
-        public Fornecedor ObterPorId(Guid id)
+        public async Task<Fornecedor> ObterPorId(Guid id)
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                 return db.Get<Fornecedor>(id);
+                 return await db.GetAsync<Fornecedor>(id);
                 //retorna fornecedor com base no ID que passei
             }
         }
-        public IEnumerable<Fornecedor> Buscar(Expression<Func<Fornecedor,bool>> where)
+        public async Task<IEnumerable<Fornecedor>> Buscar(Expression<Func<Fornecedor,bool>> where)
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                return db.Select<Fornecedor>(where);
+                return await db.SelectAsync<Fornecedor>(where);
             }
         }
-        public void Adicionar(Fornecedor fornecedor)
+        public async Task Adicionar(Fornecedor fornecedor)
         {
             using(SqlConnection db = new SqlConnection(_connection))
             {
-                db.Insert(fornecedor);
+                await db.InsertAsync(fornecedor);
 
             }
         }
-        public void Alterar(Fornecedor fornecedor)
+        public async Task Alterar(Fornecedor fornecedor)
         {
             using(SqlConnection db = new SqlConnection(_connection))
             {
-                db.Update(fornecedor);
+                await db.UpdateAsync (fornecedor);
             }          
         }
-        public void Deletar(Fornecedor fornecedor)
+        public async Task Deletar(Fornecedor fornecedor)
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                db.Delete(fornecedor);
+                await db.DeleteAsync(fornecedor);
             }
         }
-
     }
 }

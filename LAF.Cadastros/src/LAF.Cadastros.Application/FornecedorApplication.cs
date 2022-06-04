@@ -4,6 +4,7 @@ using LAF.Cadastros.Domain.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace LAF.Cadastros.Application
 {
@@ -14,36 +15,33 @@ namespace LAF.Cadastros.Application
         {
             _fornecedorRepository = fornecedorRepository;
         }
-        public Fornecedor ObterPorId(Guid id)
+        public async Task<Fornecedor> ObterPorId(Guid id)
         {
-          
-            return _fornecedorRepository.ObterPorId(id);
+            return await _fornecedorRepository.ObterPorId(id);
         }
-        public IEnumerable<Fornecedor> ObterTodos()
+        public async Task<IEnumerable<Fornecedor>> ObterTodos()
         {
-            return _fornecedorRepository.ObterTodos();
+            return await _fornecedorRepository.ObterTodos();
         }
-        public IEnumerable<Fornecedor> Buscar(Expression<Func<Fornecedor, bool>> where)
+        public async Task<IEnumerable<Fornecedor>> Buscar(Expression<Func<Fornecedor, bool>> where)
         {
-            return _fornecedorRepository.Buscar(where);
-        }
-
-        public void Adicionar(Fornecedor fornecedor)
-        {
-            _fornecedorRepository.Adicionar(fornecedor);
-        }
-        public void Alterar(Fornecedor fornecedor)
-        {
-            _fornecedorRepository.Alterar(fornecedor);
-            
-        }
-        public void Deletar(Fornecedor fornecedor)
-        {
-            _fornecedorRepository.Deletar(fornecedor);
+            return await _fornecedorRepository.Buscar(where);
         }
 
-        
+        public async Task Adicionar(Fornecedor fornecedor)
+        {
+             await _fornecedorRepository.Adicionar(fornecedor);
+        }
+        public async Task Alterar(Fornecedor fornecedor)
+        {
+            await _fornecedorRepository.Alterar(fornecedor);
+
+        }
+        public async Task Deletar(Fornecedor fornecedor)
+        {
+           await _fornecedorRepository.Deletar(fornecedor);
+        }
+
+
     }
-
-        
 }

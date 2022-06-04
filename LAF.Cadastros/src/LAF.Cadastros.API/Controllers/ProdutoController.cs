@@ -50,6 +50,7 @@ namespace LAF.Cadastros.API.Controllers
                 return BadRequest("Produto já cadastrado");
 
             Fornecedor fornecedor = _fornecedorApplication.ObterPorId(produtoPostViewModel.FornecedorId);
+
             if (fornecedor == null)
                 return BadRequest("Fornecedor não cadastrado!");
 
