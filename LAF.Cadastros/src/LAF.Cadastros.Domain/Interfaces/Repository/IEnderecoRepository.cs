@@ -3,17 +3,18 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace LAF.Cadastros.Domain.Interfaces.Repository
 {
     public interface IEnderecoRepository
     {
-        IEnumerable<Endereco> ObterTodos();
-        Endereco ObterPorId(Guid id);
-        IEnumerable<Endereco> Buscar(Expression<Func<Endereco, bool>> where);
-        void Adicionar(Endereco endereco);
-        void Alterar(Endereco endereco);
-        void Deletar(Endereco endereco);
+        Task <IEnumerable<Endereco>> ObterTodos();
+        Task<Endereco> ObterPorId(Guid id);
+        Task<IEnumerable<Endereco>> Buscar(Expression<Func<Endereco, bool>> where);
+        Task Adicionar(Endereco endereco);
+        Task Alterar(Endereco endereco);
+        Task Deletar(Endereco endereco);
     
     }
 }

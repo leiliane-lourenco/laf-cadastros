@@ -4,6 +4,7 @@ using LAF.Cadastros.Domain.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace LAF.Cadastros.Application
 {
@@ -14,29 +15,29 @@ namespace LAF.Cadastros.Application
         {
             _enderecoRepository = enderecoRepository;
         }
-        public IEnumerable<Endereco> ObterTodos()
+        public async Task<IEnumerable<Endereco>> ObterTodos()
         {
-            return _enderecoRepository.ObterTodos();
+            return await _enderecoRepository.ObterTodos();
         }
-        public Endereco ObterPorId(Guid id)
+        public async Task<Endereco> ObterPorId(Guid id)
         {
-            return _enderecoRepository.ObterPorId(id);
+            return await _enderecoRepository.ObterPorId(id);
         }
-        public IEnumerable<Endereco> Buscar(Expression<Func<Endereco, bool>> where)
+        public async Task<IEnumerable<Endereco>> Buscar(Expression<Func<Endereco, bool>> where)
         {
-            return (_enderecoRepository.Buscar(where));
+            return (await _enderecoRepository.Buscar(where));
         }
-        public void Adicionar(Endereco endereco)
+        public async Task Adicionar(Endereco endereco)
         {
-            _enderecoRepository.Adicionar(endereco);
+            await _enderecoRepository.Adicionar(endereco);
         }
-        public void Alterar(Endereco endereco)
+        public async Task Alterar(Endereco endereco)
         {
-            _enderecoRepository.Alterar(endereco);
+            await _enderecoRepository.Alterar(endereco);
         }
-        public void Deletar(Endereco endereco)
+        public async Task Deletar(Endereco endereco)
         {
-            _enderecoRepository.Deletar(endereco);
+            await _enderecoRepository.Deletar(endereco);
         }
     }
 }
