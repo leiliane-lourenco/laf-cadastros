@@ -3,6 +3,8 @@ using LAF.Cadastros.Domain.Entities;
 using LAF.Cadastros.Domain.Interfaces.Application;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace LAF.Cadastros.API.Controllers
@@ -12,9 +14,13 @@ namespace LAF.Cadastros.API.Controllers
     public class EnderecoController : ControllerBase
     {
         private readonly IEnderecoApplication _enderecoApplication;
-        public EnderecoController(IEnderecoApplication enderecoApplication)
+        private readonly IFornecedorApplication _fornecedorApplication;
+        public EnderecoController(
+            IEnderecoApplication enderecoApplication, 
+            IFornecedorApplication fornecedorApplication)
         {
             _enderecoApplication = enderecoApplication;
+            _fornecedorApplication = fornecedorApplication;
         }
         [HttpGet]
         public async Task<IActionResult>  ObterTodos()
@@ -22,20 +28,33 @@ namespace LAF.Cadastros.API.Controllers
             return Ok(await _enderecoApplication.ObterTodos());
         }
         [HttpGet("{id}")]
-        public async Task<IActionResult>  ObterPorId(Guid id)
+        public async Task<IActionResult> ObterPorId(Guid id)
         {
             return Ok(await _enderecoApplication.ObterPorId(id));
         }
 
-        [HttpGet("filtros/{cidade}")]
-        public async Task<IActionResult>  ObterPorLogradouro(string cidade)
+        [HttpGet("filtros/{logradouro}")]
+        public async Task<IActionResult> ObterPorLogradouro(string logradouro)
         {
-            return Ok( await _enderecoApplication.Buscar(endereco => endereco.Cidade == cidade));
+            return Ok( await _enderecoApplication.Buscar(endereco => endereco.Logradouro == logradouro));
         }
 
         [HttpPost]
         public async Task<IActionResult> Adicionar(EnderecoPostViewModel enderecoPostViewModel)
         {
+            IEnumerable<Endereco> enderecos = await _enderecoApplication.Buscar
+                   (endereco => endereco.FornecedorId == enderecoPostViewModel.FornecedorId);
+
+            Endereco endereco = enderecos.FirstOrDefault();
+
+            if (endereco != null)
+                return BadRequest("Fornecedor já possui um  endereço cadastrado");
+
+            Fornecedor fornecedor = await _fornecedorApplication.ObterPorId(enderecoPostViewModel.FornecedorId);
+
+            if (fornecedor == null)
+                return BadRequest("Fornecedor não cadastrado!");
+
             if (string.IsNullOrWhiteSpace(enderecoPostViewModel.Logradouro))
                 return BadRequest("Campo Logradouro deve estar preenchido");
 
@@ -54,7 +73,8 @@ namespace LAF.Cadastros.API.Controllers
             if (string.IsNullOrWhiteSpace(enderecoPostViewModel.Estado))
                 return BadRequest("Campo Estado deve estar preenchido");
 
-            Endereco endereco = new Endereco()
+
+            endereco = new Endereco()
             {
                 FornecedorId = enderecoPostViewModel.FornecedorId,
                 Logradouro = enderecoPostViewModel.Logradouro,
