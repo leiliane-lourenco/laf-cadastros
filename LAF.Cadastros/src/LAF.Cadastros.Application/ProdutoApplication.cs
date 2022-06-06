@@ -4,6 +4,7 @@ using LAF.Cadastros.Domain.Interfaces.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace LAF.Cadastros.Application
 {
@@ -18,30 +19,30 @@ namespace LAF.Cadastros.Application
             _produtoRepository = produtoRepository;
             _fornecedorRepository = fornecedorRepository;
         }
-        public Produto ObterPorId(Guid id)
+        public async Task<Produto> ObterPorId(Guid id)
         {
-            return _produtoRepository.ObterPorId(id);
+            return  await _produtoRepository.ObterPorId(id);
         }
-        public IEnumerable<Produto> Buscar(Expression<Func<Produto, bool>> where)
+        public async Task<IEnumerable<Produto>> Buscar(Expression<Func<Produto, bool>> where)
         {
-            return _produtoRepository.Buscar(where);
+            return await _produtoRepository.Buscar(where);
         }
 
-        public IEnumerable<Produto> ObterTodos()
+        public async Task<IEnumerable<Produto>> ObterTodos()
         {
-            return _produtoRepository.ObterTodos();
+            return await _produtoRepository.ObterTodos();
         }
-        public void Adicionar(Produto produto)
+        public async Task Adicionar(Produto produto)
         {
-            _produtoRepository.Adicionar(produto);
+            await _produtoRepository.Adicionar(produto);
         }
-        public void Alterar(Produto produto)
+        public async Task Alterar(Produto produto)
         {
-            _produtoRepository.Alterar(produto);
+             await _produtoRepository.Alterar(produto);
         }
-        public void Deletar(Produto produto)
+        public async Task Deletar(Produto produto)
         {
-            _produtoRepository.Deletar(produto);
+            await _produtoRepository.Deletar(produto);
         }
     }
 

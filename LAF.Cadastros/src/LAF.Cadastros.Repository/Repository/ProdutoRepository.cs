@@ -6,55 +6,57 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq.Expressions;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace LAF.Cadastros.Repository.Repository
 {
     public class ProdutoRepository : IProdutoRepository
     {
         private string _connection = @"Data Source=Leiliane-PC\SQL2019;Initial Catalog=LAJFCadastroProdutosDB;User ID=sa;Password=123";
-        public Produto ObterPorId(Guid id)
+        public async Task<Produto> ObterPorId(Guid id)
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                return db.Get<Produto>(id);
+                return  await db.GetAsync<Produto>(id);
                 //retorna fornecedor com base no ID que passei
             }
         }
-        public IEnumerable<Produto> Buscar(Expression<Func<Produto, bool>> where)
+        public async Task<IEnumerable<Produto>> Buscar(Expression<Func<Produto, bool>> where)
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                return db.Select<Produto>(where);
+                return await db.SelectAsync<Produto>(where);
             }
         }
-        public IEnumerable<Produto> ObterTodos()
+        public async Task<IEnumerable<Produto>> ObterTodos()
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                return db.GetAll<Produto>();
+                return  await db.GetAllAsync<Produto>();
             }
         }    
 
-        public void Adicionar(Produto produto)
+        public async Task Adicionar(Produto produto)
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                db.Insert(produto);
+                await db.InsertAsync(produto);
             }
         }
-        public void Alterar(Produto produto)
+        public async Task Alterar(Produto produto)
         {
             using(SqlConnection db = new SqlConnection(_connection))
             {
-                db.Update(produto);
+               await db.UpdateAsync(produto);
             }
         }
-        public void Deletar (Produto produto)
+        public async Task Deletar (Produto produto)
         {
             using (SqlConnection db = new SqlConnection(_connection))
             {
-                db.Delete(produto);
+                await db.DeleteAsync(produto);
             }
         }
+
     }
 }
